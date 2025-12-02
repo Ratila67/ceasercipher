@@ -36,14 +36,14 @@ def vigenere_cipher(text, password, cipher):
 	return crypted_text
 
 
-def chiffre_cesare(text,key):
+def crypt_cesar(text,key):
 	result = ""
 	for char in text: # on parcourt le texte
-		crypted_char = chr(ord(char) + key)
-		result += crypted_char
+		crypted_char = chr(ord(char) + key) # on chiffre le caractère en utilisant la clé (chr : convertit un caractère en son code ASCII) (ord : convertit un caractère en son code ASCII)
+		result += crypted_char # on ajoute le caractère chiffré au résultat
 	return result
 
-def dechiffre_cesare(text,key):
+def decrypt_cesar(text,key):
 	result = ""
 	for char in text: # on parcourt le texte
 		crypted_char = chr(ord(char) - key)
