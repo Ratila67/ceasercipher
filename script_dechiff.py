@@ -3,7 +3,7 @@ import cryptography as cr
 
 def cesar_cipher_multiple(text):
     for d in range(len(string.printable)):
-        result = cr.crypt_cesar(text, d)   # on déchiffre le texte avec la clé d
+        result = cr.decrypt_cesar(text, d)   # on déchiffre le texte avec la clé d
         print(result + "\n" + "Decalage: " + str(d))
         print("_"*20)
 

@@ -2,8 +2,8 @@ import string
 
 def cesar_cipher(text, key, cipher):
 	if type(text) == str and type(key) == int:
-		return "".join([chr((ord(char) + (1 if cipher else -1) * key) % 1_114_112)\
-																for char in text])
+		return "".join([chr((ord(char) + (1 if cipher else -1) * key) % 1_114_112) 
+		for char in text]) # on chiffre ou déchiffre le texte avec la clé
 	else:
 		raise(TypeError)
 
