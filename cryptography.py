@@ -35,31 +35,20 @@ def vigenere_cipher(text, password, cipher):
 
 	return crypted_text
 
-def chiffre_cesare(text,decalage):
-	alphabet = string.ascii_letters # alphabet en minuscule et majuscule
-	resultat = [] 
-	for char in text: # on parcourt le texte
-		if char in alphabet: # si la lettre est dans l'alphabet
-			position = alphabet.index(char) # on recupere la position de la lettre dans l'alphabet
-			nouvelle_position = (position + decalage) % len(alphabet) # on calcule la nouvelle position de la lettre dans l'alphabet
-			nouvelle_lettre = alphabet[nouvelle_position] # on recupere la nouvelle lettre dans l'alphabet
-			resultat.append(nouvelle_lettre) # on ajoute la nouvelle lettre au resultat
-		else: # si la lettre n'est pas dans l'alphabet
-			resultat.append(char) # on ajoute la lettre au resultat
-	return "".join(resultat) # on retourne le resultat sous forme de chaine de caracteres
 
-def dechiffre_cesare(text,decalage):
-	alphabet = string.ascii_letters # alphabet en minuscule et majuscule
-	resultat = [] 
+def chiffre_cesare(text,key):
+	result = ""
 	for char in text: # on parcourt le texte
-		if char in alphabet: # si la lettre est dans l'alphabet
-			position = alphabet.index(char) # on recupere la position de la lettre dans l'alphabet
-			nouvelle_position = (position - decalage) % len(alphabet) # on calcule la nouvelle position de la lettre dans l'alphabet
-			nouvelle_lettre = alphabet[nouvelle_position] # on recupere la nouvelle lettre dans l'alphabet
-			resultat.append(nouvelle_lettre) # on ajoute la nouvelle lettre au resultat
-		else: # si la lettre n'est pas dans l'alphabet
-			resultat.append(char) # on ajoute la lettre au resultat
-	return "".join(resultat) # on retourne le resultat sous forme de chaine de caracteres
+		crypted_char = chr(ord(char) + key)
+		result += crypted_char
+	return result
+
+def dechiffre_cesare(text,key):
+	result = ""
+	for char in text: # on parcourt le texte
+		crypted_char = chr(ord(char) - key)
+		result += crypted_char
+	return result
 
 
 if __name__ == "__main__":

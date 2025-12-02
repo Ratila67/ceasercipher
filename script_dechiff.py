@@ -15,6 +15,6 @@ def dechiffre_multiple_cesare(text):
         print("".join(resultat) + " " + "///Decalage: " + str(d))
 
 if __name__ == "__main__":
-    text = "le chocolat est bon"
+    text = "lapin"
     dechiffre_multiple_cesare(text)
     print("_"*20)
