@@ -1,4 +1,6 @@
 import string
+from typing import Any
+import script_dechiff as sd
 
 def cesar_cipher(text, key, cipher):
 	if type(text) == str and type(key) == int:
@@ -37,32 +39,69 @@ def vigenere_cipher(text, password, cipher):
 
 
 def crypt_cesar(text,key):
-	result = ""
+	crypted_text = ""
 	for char in text: # on parcourt le texte
-		crypted_char = chr(ord(char) + key) # on chiffre le caractère en utilisant la clé (chr : convertit un caractère en son code ASCII) (ord : convertit un caractère en son code ASCII)
-		result += crypted_char # on ajoute le caractère chiffré au résultat
-	return result
+		# On calcule le nouveau code ASCII en ajoutant la clé
+		# Le modulo garantit que le résultat reste dans la plage valide (0 à 93+33 afin d'avoir les caractères ASCII valides)
+		new_code = (ord(char) + key) % 93 + 33
+		crypted_char = chr(new_code) # on convertit le code en caractère
+		crypted_text += crypted_char # on ajoute le caractère chiffré au résultat
+	return crypted_text
 
 def decrypt_cesar(text,key):
-	result = ""
-	for char in text: # on parcourt le texte
-		crypted_char = chr(ord(char) - key)
-		result += crypted_char
-	return result
+	decrypted_text = ""
+	for char in text: # on parcourt le texte crypté
+		# On calcule le nouveau code ASCII en ajoutant la clé
+		# Le modulo garantit que le résultat reste dans la plage valide (0 à 93+33 afin d'avoir les caractères ASCII valides)
+		new_code = (ord(char) - key) % 93 + 33
+		decrypted_char = chr(new_code) # on convertit le code en caractère
+		decrypted_text += decrypted_char # on ajoute le caractère chiffré au résultat
+	return decrypted_text
+
+def crypt_vigenere(text, password):
+	# Étape 4 : Chiffrement de Vigenère
+	# On utilise crypt_cesar avec une clé différente pour chaque caractère
+	crypted_text = ""
+	for index, char in enumerate(text):
+		#print(f"index {index} et char {char}, password {password}") #dans index j'ai l'index du caractère dans le texte, dans char j'ai le caractère lui même, dans password j'ai la clé de chiffrement
+		key_index = index % len(password) # on récupère l'index du caractère de la clé à cette position
+		#print(f"key index {key_index}")
+		key_char = password[key_index] # on récupère le caractère de la clé à cette position
+		#print(f"key char {key_char}")
+		key_value = ord(key_char) # on convertit le caractère de la clé en nombre (son code ASCII) pour pouvoir l'utiliser comme clé de chiffrement
+		#print(f"key value {key_value}")
+		crypted_char = crypt_cesar(char, key_value)
+		crypted_text += crypted_char
+	return crypted_text
+
+def decrypt_vigenere(text, password):
+	# Étape 5 : Déchiffrement de Vigenère
+	# On utilise decrypt_cesar avec les décalages inverses de la clé
+	decrypted_text = ""
+	for index, char in enumerate(text):
+		key_index = index % len(password)
+		key_char = password[key_index]
+		key_value = ord(key_char)
+		decrypted_char = decrypt_cesar(char, key_value)
+		decrypted_text += decrypted_char
+	
+	return decrypted_text
 
 
 if __name__ == "__main__":
 	message = "le chocolat est bon"
 
-	crypted_text = cesar_cipher(message, 12, cipher=True) # exo 1
-	print(crypted_text)
+	crypted_text = crypt_cesar(message, 12) # exo 1
+	print("Exo 1: " + crypted_text)
 
-	initial_message = cesar_cipher(crypted_text, 12, cipher=False) # exo 2
-	print(initial_message == message)
+	initial_message = decrypt_cesar(crypted_text, 12) # exo 2
+	print("Exo 2: " + str(initial_message == message))
 
-	hack_cesar_cipher(crypted_text, alphabet=string.printable) # exo3
+	sd.cesar_cipher_multiple(message) # exo3
+	print("Exo 3: " + "_"*20)
 
-	crypted_message = vigenere_cipher(text=message, password="Azerty12345!", cipher=True)
-	print(crypted_message)
-	initial_message = vigenere_cipher(text=crypted_message, password="Azerty12345!", cipher=False)
-	print(initial_message)
+	crypted_message = crypt_vigenere(message, "Azerty12345!") # exo 4
+	print("Exo 4: " + crypted_message)
+	initial_message = decrypt_vigenere(crypted_message, "Azerty12345!") # exo 5
+	print("Exo 5: " + initial_message)
+	print("Exo 5: Le message est correct ? " + str(initial_message == message))
