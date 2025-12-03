@@ -4,12 +4,12 @@ def cesar_cipher_correction(text, key, cipher=True):
 
     key = key if cipher else -key # si cipher est True, on utilise la clé, sinon on utilise la clé négative
 
-    crypted_text = ""
+    list_of_crypted_chars = []
     for char in text: # on parcourt le texte
         crypted_char = chr((ord(char) + key) % 1_114_112) # ord permet de prendre la position ascii et % 1_114_112 permet de rester dans la plage valide (0 à 1_114_112)
-        crypted_text += crypted_char # on ajoute le caractère chiffré au résultat
+        list_of_crypted_chars.append(crypted_char) # on ajoute le caractère chiffré au résultat
 
-    return crypted_text
+    return "".join(list_of_crypted_chars)
 
 def brute_force_cesar_cipher(crypted_text):
     for potential_key in range(0, 1_114_112):
@@ -24,12 +24,12 @@ def brute_force_cesar_cipher(crypted_text):
 
 def vigenere_cipher_correction(text, password, cipher=True):
     list_of_keys = [ord(char) for char in password]
-    crypted_text = ""
+    list_of_crypted_chars = []
     for index, char in enumerate(text):
         current_key = list_of_keys[index % len(list_of_keys)]
         crypted_char = cesar_cipher_correction(char, current_key, cipher)
-        crypted_text += crypted_char
-    return crypted_text
+        list_of_crypted_chars.append(crypted_char)
+    return "".join(list_of_crypted_chars)
 
 initial_message = "Bonjour tout le monde"
 password = "Azerty12345"
