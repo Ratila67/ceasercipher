@@ -89,19 +89,25 @@ def decrypt_vigenere(text, password):
 
 
 if __name__ == "__main__":
-	message = "le chocolat est bon"
+	input_message = input("Entrez un message à chiffrer : ")
+	input_key = int(input("Entrez un décalage de César (chiffre uniquement): "))
 
-	crypted_text = crypt_cesar(message, 12) # exo 1
-	print("Exo 1: " + crypted_text)
+	input_message_crypt = input("Entrez un message à déchiffrer : ")
+	input_key_decrypt = int(input("Entrez le décalage de César pour le déchiffrement: "))
+	
+	input_password = input("Entrez un mot de passe de chiffrement : ")
 
-	initial_message = decrypt_cesar(crypted_text, 12) # exo 2
-	print("Exo 2: " + str(initial_message == message))
+	crypted_text = crypt_cesar(input_message, input_key) # exo 1
+	print("Exo 1: Voici votre message chiffré : " + crypted_text)
 
-	sd.cesar_cipher_multiple(message) # exo3
+	initial_message = decrypt_cesar(input_message_crypt, input_key_decrypt) # exo 2
+	print("Exo 2: Voici votre message déchiffré : " + initial_message + "\n" + "Le message est correct ? " + str(initial_message == input_message_crypt))
+
+	sd.cesar_cipher_multiple(input_message) # exo3
 	print("Exo 3: " + "_"*20)
 
-	crypted_message = crypt_vigenere(message, "Azerty12345!") # exo 4
-	print("Exo 4: " + crypted_message)
-	initial_message = decrypt_vigenere(crypted_message, "Azerty12345!") # exo 5
-	print("Exo 5: " + initial_message)
-	print("Exo 5: Le message est correct ? " + str(initial_message == message))
+	crypted_message = crypt_vigenere(input_message, input_password) # exo 4
+	print("Exo 4: Voici votre message chiffré : " + crypted_message)
+	initial_message = decrypt_vigenere(crypted_message, input_password) # exo 5
+	print("Exo 5: Voici votre message déchiffré : " + initial_message + "\n" + "Le message est correct ? " + str(initial_message == input_message))
+	print("Exo 5: Le message est correct ? " + str(initial_message == input_message))
