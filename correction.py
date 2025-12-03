@@ -22,9 +22,28 @@ def brute_force_cesar_cipher(crypted_text):
                 print("_"*20)
                 break
 
-initial_message = "le chocolat est bon"
+def vigenere_cipher_correction(text, password, cipher=True):
+    list_of_keys = [ord(char) for char in password]
+    crypted_text = ""
+    for index, char in enumerate(text):
+        current_key = list_of_keys[index % len(list_of_keys)]
+        crypted_char = cesar_cipher_correction(char, current_key, cipher)
+        crypted_text += crypted_char
+    return crypted_text
 
-crypted_message = cesar_cipher_correction(initial_message, 12)
-print(crypted_message) # on chiffre le message avec la clé 12
+initial_message = "Bonjour tout le monde"
+password = "Azerty12345"
 
-print(cesar_cipher_correction(crypted_message, 12, False)) # on déchiffre le message avec la clé négative
+crypted_text = vigenere_cipher_correction(initial_message, password)
+print(crypted_text)
+
+print(vigenere_cipher_correction(crypted_text, password, False))
+
+#initial_message = "le chocolat est bon"
+#password = "Azerty12345!"
+#crypted_message = cesar_cipher_correction(initial_message, 12)
+#print(crypted_message) # on chiffre le message avec la clé 12
+
+#print(cesar_cipher_correction(crypted_message, 12, False)) # on déchiffre le message avec la clé négative
+
+#brute_force_cesar_cipher(crypted_message)
