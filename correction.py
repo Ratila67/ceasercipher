@@ -1,3 +1,5 @@
+import string
+
 def cesar_cipher_correction(text, key, cipher=True):
 
     key = key if cipher else -key # si cipher est True, on utilise la clé, sinon on utilise la clé négative
@@ -9,6 +11,16 @@ def cesar_cipher_correction(text, key, cipher=True):
 
     return crypted_text
 
+def brute_force_cesar_cipher(crypted_text):
+    for potential_key in range(0, 1_114_112):
+        potentiel_intial_text = cesar_cipher_correction(crypted_text, potential_key, False)
+
+        for char in potentiel_intial_text:
+            if char in string.printable:
+                print(potentiel_intial_text)
+                print(potential_key)
+                print("_"*20)
+                break
 
 initial_message = "le chocolat est bon"
 
